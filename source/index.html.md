@@ -70,9 +70,9 @@ request(options, function (error, response, body) {
 | `reactive` | Gives access to socket.io endpoint
 | `monitor`  | Gives access to monitor application
 
-# Rest API
+# Dota
 
-## Dota Live games
+## Live games API
 
 Live games API will return all live games with relevant predictions.
 
@@ -256,8 +256,6 @@ Market id can have following values:
 Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboard does not necessary imply that <code>radiant_team_race_to_10_kills</code> should be already resolved.
 </aside>
 
-
-
 ---
 
 ### Market status
@@ -271,4 +269,152 @@ Market status can have following values:
 | `WaitingForResult`  | Some data sources can not provide enough information to resolve market in real-time (due to absence of data or not enough resolution). The result will be available after replay parse
 | `Resolved`          | Market is resolved successfully
 
+## Real-time API
 
+For JavaScript real-time socket.io connection is another available option to consume live matches.
+
+```javascript
+var io = require('socket.io-client');
+
+var socket = io("https://app.fortune-teller.io/dota/v2", {
+        extraHeaders: {
+            Authorization: `Bearer ${access_token}`
+        }
+    })
+
+    socket.on('connect', () => {
+        console.log('Connected');
+    })
+    socket.on('match', (data) => {
+        console.log(JSON.stringify(data));
+    });
+    socket.on('reconnect', attempt => {
+        console.log(`Reconnect #${attempt}`);
+    })
+    socket.on('disconnect', () => {
+        console.log('Disconnected');
+    });
+    socket.on('error', (error) => {
+        console.log(error);
+    });
+```
+
+> Match event will have following form
+
+```json
+{
+  "match_id": 9792,
+  "game_time": 2546,
+  "series": {
+    "series_id": 9059,
+    "game_number": 1,
+    "dire_wins": 0,
+    "radiant_wins": 0
+  },
+  "radiant": {
+    "team_id": 565,
+    "name": "KZ.D2"
+  },
+  "dire": {
+    "team_id": 578,
+    "name": "SK.D2"
+  },
+  "markets": [
+    {
+      "id": "radiant_team_win",
+      "game_time": 2546,
+      "result": null,
+      "status": "Open",
+      "message": "No reason to put on hold found",
+      "predictions": [
+        {
+          "outcome": 0,
+          "label": "Dire win",
+          "probability": 0.5541133036827675,
+          "odds": 1.7,
+          "is_locked": false,
+          "lock_reason": null
+        },
+        {
+          "outcome": 1,
+          "label": "Radiant win",
+          "probability": 0.44588669631723254,
+          "odds": 2.08,
+          "is_locked": false,
+          "lock_reason": null
+        }
+      ]
+    },
+    {
+      "id": "radiant_team_race_to_10_kills",
+      "game_time": 735,
+      "result": {
+        "outcome": 1,
+        "label": "Radiant first"
+      },
+      "status": "Resolved",
+      "message": "Market resolved successfully",
+      "predictions": null
+    },
+    {
+      "id": "radiant_team_race_to_20_kills",
+      "game_time": 1066,
+      "result": {
+        "outcome": 1,
+        "label": "Radiant first"
+      },
+      "status": "Resolved",
+      "message": "Market resolved successfully",
+      "predictions": null
+    },
+    {
+      "id": "radiant_team_race_to_30_kills",
+      "game_time": 1539,
+      "result": null,
+      "status": "WaitingForResult",
+      "message": "Market outcome is unclear. Waiting for replay to determine result",
+      "predictions": null
+    },
+    {
+      "id": "radiant_team_race_to_40_kills",
+      "game_time": 1920,
+      "result": {
+        "outcome": 0,
+        "label": "Dire first"
+      },
+      "status": "Resolved",
+      "message": "Market resolved successfully",
+      "predictions": null
+    },
+    {
+      "id": "radiant_team_race_to_50_kills",
+      "game_time": 2546,
+      "result": null,
+      "status": "OnHold",
+      "message": "Dire first probability is higher than 0.80",
+      "predictions": [
+        {
+          "outcome": 0,
+          "label": "Dire first",
+          "probability": 0.9270702496626473,
+          "odds": 1.03,
+          "is_locked": false,
+          "lock_reason": null
+        },
+        {
+          "outcome": 1,
+          "label": "Radiant first",
+          "probability": 0.07292975033735272,
+          "odds": 8.86,
+          "is_locked": false,
+          "lock_reason": null
+        }
+      ]
+    }
+  ]
+}
+```
+
+<aside class="warning">
+It is strongly recommended to obtain new access token on each reconnection.
+</aside>
