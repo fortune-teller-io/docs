@@ -231,6 +231,14 @@
               </ul>
           </li>
           <li>
+            <a href="#rest-api" class="toc-h1 toc-link" data-title="Rest API">Rest API</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#dota-live-games" class="toc-h2 toc-link" data-title="Dota Live games">Dota Live games</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -243,7 +251,13 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='introduction'>Introduction</h1>
-<p>Welcome to the FortuneTeller API.</p>
+<p>Welcome to the FortuneTeller. Currently, Fortune Teller consists of three main products:</p>
+
+<ol>
+<li>REST API</li>
+<li>Socket.io real-time API</li>
+<li>Monitor frontend application</li>
+</ol>
 <h1 id='authentication'>Authentication</h1>
 <p>FortuneTeller API uses OAuth client_credentials flow for authorization.</p>
 <pre class="highlight shell tab-shell"><code><span class="c"># With shell, you can just pass the correct header with each request</span>
@@ -258,7 +272,6 @@ curl --request POST <span class="se">\</span>
 
 <span class="kd">var</span> <span class="nx">client_id</span> <span class="o">=</span> <span class="s2">"client_id"</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">client_secret</span> <span class="o">=</span> <span class="s2">"client_secret"</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">address</span> <span class="o">=</span> <span class="s2">"https://app.fortune-teller.io/dota/v2"</span>
 
 <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">method</span><span class="p">:</span> <span class="s1">'POST'</span><span class="p">,</span>
@@ -274,12 +287,231 @@ curl --request POST <span class="se">\</span>
     <span class="kd">var</span> <span class="nx">parsed</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
     <span class="kd">var</span> <span class="nx">access_token</span> <span class="o">=</span> <span class="nx">parsed</span><span class="p">.</span><span class="nx">access_token</span><span class="p">;</span>
 <span class="p">}</span>
-</code></pre><h3 id='scopes'>Scopes</h3>
+</code></pre>
+<hr>
+<h3 id='scopes'>Scopes</h3>
+<table><thead>
+<tr>
+<th><strong>Scope</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>api</code></td>
+<td>Gives access to REST API</td>
+</tr>
+<tr>
+<td><code>reactive</code></td>
+<td>Gives access to socket.io endpoint</td>
+</tr>
+<tr>
+<td><code>monitor</code></td>
+<td>Gives access to monitor application</td>
+</tr>
+</tbody></table>
+<h1 id='rest-api'>Rest API</h1><h2 id='dota-live-games'>Dota Live games</h2>
+<p>Live games API will return all live games with relevant predictions.</p>
+<pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
+  --url <span class="s1">'https://app.fortune-teller.io/api/dota/live'</span> <span class="se">\</span>
+  --header <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
+  --header <span class="s1">'Authorization: Bearer access_token'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">access_token</span> <span class="o">=</span> <span class="s1">'access_token'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+    <span class="na">url</span><span class="p">:</span> <span class="s1">'https://app.fortune-teller.io/api/dota/live'</span><span class="p">,</span>
+    <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s1">'Accept'</span><span class="p">:</span> <span class="s1">'application/json'</span><span class="p">,</span>
+      <span class="s1">'Authorization'</span><span class="p">:</span> <span class="s2">`Bearer </span><span class="p">${</span><span class="nx">access_token</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">error</span><span class="p">,</span> <span class="nx">response</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nb">Error</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+
+    <span class="kd">var</span> <span class="nx">parsed</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">body</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">items</span> <span class="o">=</span> <span class="nx">parsed</span><span class="p">.</span><span class="nx">items</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"items"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"match_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9792</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">2546</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"series"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"series_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9059</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"game_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"dire_wins"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"radiant_wins"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"radiant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"team_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">565</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KZ.D2"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"dire"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"team_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">578</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SK.D2"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="s2">"markets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_win"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">2546</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Open"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"No reason to put on hold found"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dire win"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5541133036827675</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.7</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Radiant win"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.44588669631723254</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.08</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_10_kills"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">735</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Radiant first"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resolved"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Market resolved successfully"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_20_kills"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1066</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Radiant first"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resolved"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Market resolved successfully"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_30_kills"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1539</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WaitingForResult"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Market outcome is unclear. Waiting for replay to determine result"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_40_kills"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1920</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+            </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dire first"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resolved"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Market resolved successfully"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_50_kills"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">2546</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OnHold"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dire first probability is higher than 0.80"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dire first"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9270702496626473</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.03</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Radiant first"</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.07292975033735272</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">8.86</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<hr>
+<h3 id='markets'>Markets</h3>
+<p>Market id can have following values:</p>
+
 <ol>
-<li>api - gives access to REST API.</li>
-<li>reactive - gives access to socket.io endpoint.</li>
-<li>monitor - gives access to monitor application.</li>
+<li><code>radiant_team_win_outcome</code></li>
+<li><code>radiant_team_higher_gpm</code></li>
+<li><code>radiant_team_higher_xpm</code></li>
+<li><code>radiant_team_higher_kills</code></li>
+<li><code>radiant_team_first_blood</code></li>
+<li><code>radiant_team_first_roshan</code></li>
+<li><code>radiant_team_destroy_first_tower</code></li>
+<li><code>radiant_team_destroy_first_barrack</code></li>
+<li><code>radiant_player_higher_gpm</code></li>
+<li><code>radiant_player_higher_xpm</code></li>
+<li><code>radiant_player_higher_kills</code></li>
+<li><code>radiant_team_race_to_10_kills</code></li>
+<li><code>radiant_team_race_to_20_kills</code></li>
+<li><code>radiant_team_race_to_30_kills</code></li>
+<li><code>radiant_team_race_to_40_kills</code></li>
+<li><code>radiant_team_race_to_50_kills</code></li>
+<li><code>radiant_team_race_to_60_kills</code></li>
+<li><code>radiant_team_race_to_70_kills</code></li>
+<li><code>radiant_team_race_to_80_kills</code></li>
+<li><code>radiant_team_race_to_90_kills</code></li>
+<li><code>radiant_team_race_to_100_kills</code></li>
 </ol>
+
+<aside class="warning">
+Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboard does not necessary imply that <code>radiant_team_race_to_10_kills</code> should be already resolved.
+</aside>
+
+<hr>
+<h3 id='market-status'>Market status</h3>
+<p>Market status can have following values:</p>
+
+<table><thead>
+<tr>
+<th><strong>Value</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>Open</code></td>
+<td>The market is open and is recommended to be traded</td>
+</tr>
+<tr>
+<td><code>OnHold</code></td>
+<td>The market is put on hold due to market template configuration and is recommended not to be traded</td>
+</tr>
+<tr>
+<td><code>WaitingForResult</code></td>
+<td>Some data sources can not provide enough information to resolve market in real-time (due to absence of data or not enough resolution). The result will be available after replay parse</td>
+</tr>
+<tr>
+<td><code>Resolved</code></td>
+<td>Market is resolved successfully</td>
+</tr>
+</tbody></table>
 <h1 id='errors'>Errors</h1>
 <aside class="notice">
 This error section is stored in a separate file in <code>includes/_errors.md</code>. Slate allows you to optionally separate out your docs into many files...just save them to the <code>includes</code> folder and add them to the top of your <code>index.md</code>'s frontmatter. Files are included in the order listed.
