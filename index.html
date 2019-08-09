@@ -312,9 +312,7 @@ curl --request POST <span class="se">\</span>
 <td>Gives access to monitor application</td>
 </tr>
 </tbody></table>
-<h1 id='dota'>Dota</h1><h2 id='live-games-api'>Live games API</h2>
-<p>Live games API will return all live games with relevant predictions.</p>
-<pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
+<h1 id='dota'>Dota</h1><h2 id='live-games-api'>Live games API</h2><pre class="highlight shell tab-shell"><code>curl --request GET <span class="se">\</span>
   --url <span class="s1">'https://app.fortune-teller.io/api/dota/live'</span> <span class="se">\</span>
   --header <span class="s1">'Accept: application/json'</span> <span class="se">\</span>
   --header <span class="s1">'Authorization: Bearer access_token'</span>
@@ -456,6 +454,48 @@ curl --request POST <span class="se">\</span>
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
+<p>Live games API will return all live games with relevant predictions.</p>
+
+<hr>
+<h3 id='match-structure'>Match structure</h3>
+<ol>
+<li><code>match_id</code>: the identifier, see <a href="#markets">section</a> below</li>
+<li><code>game_time</code>: current in-game time in seconds</li>
+<li><code>series</code>: describes series of matches
+
+<ol>
+<li><code>series_id</code>: the id of the first match in the series defines the series_id</li>
+<li><code>game_number</code>: ordinal number inside the series</li>
+<li><code>dire_wins</code>: number of games dire have won when current match started</li>
+<li><code>radiant_wins</code>: number of games radiant have won when current match started</li>
+</ol></li>
+<li><code>radiant</code> and <code>dire</code>: describes particiapting teams</li>
+<li><code>markets</code>: desribes available markets
+
+<ol>
+<li><code>id</code>: identifier of the market</li>
+<li><code>game_time</code>: the in-game time of prediction or result, this can be different from match game_time when market is resolved as it won&#39;t advance</li>
+<li><code>result</code>: describes the outcome of the market, can be null
+
+<ol>
+<li><code>outcome</code>: describes the numeric outcome</li>
+<li><code>label</code>: human-readable description of outcome</li>
+</ol></li>
+<li><code>status</code>: market status, see <a href="#market-status">section</a> below</li>
+<li><code>message</code>: human-readable explanation of why market is in specified state</li>
+<li><code>predictions</code>: market predictions
+
+<ol>
+<li><code>outcome</code>: predicted outcome</li>
+<li><code>label</code>: predicted outcome label</li>
+<li><code>probability</code>: probability of outcome</li>
+<li><code>odds</code>: reccomended odds</li>
+<li><code>is_locked</code>: specifies whether this outcome is recomended to be locked</li>
+<li><code>lock_reason</code>: the reason of lock reccomendation, can be null</li>
+</ol></li>
+</ol></li>
+</ol>
+
 <hr>
 <h3 id='markets'>Markets</h3>
 <p>Market id can have following values:</p>
