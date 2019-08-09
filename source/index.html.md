@@ -258,29 +258,29 @@ Live games API will return all live games with relevant predictions.
 
 Market id can have following values:
 
-| **Value**                            | **Description** |
-| ---                                  | ---             |
-| `radiant_team_win`                   |  The radiant team will win current map
-| `radiant_team_higher_gpm`            |  The radiant team have higher combined GPM when the map ends
-| `radiant_team_higher_xpm`            |  The radiant team have higher combined XPM when the map ends
-| `radiant_team_higher_kills`          |  The radiant team have higher combined kills count when the map ends
-| `radiant_team_first_blood`           |  The radiant team will take first blood
-| `radiant_team_first_roshan`          |  The radiant team will take first roshan
-| `radiant_team_destroy_first_tower`   |  The radiant team will destroy first tower on the map
-| `radiant_team_destroy_first_barrack` |  The radiant team will destroy first barrack on the map
-| `radiant_player_higher_gpm`          |  The radiant player will have higher GPM when the map ends
-| `radiant_player_higher_xpm`          |  The radiant player will have higher XPM when the map ends
-| `radiant_player_higher_kills`        |  The radiant player will have higher kills count when the map ends
-| `radiant_team_race_to_10_kills`      |  The radiant player team will first get to 10 total kills
-| `radiant_team_race_to_20_kills`      |  The radiant player team will first get to 20 total kills
-| `radiant_team_race_to_30_kills`      |  The radiant player team will first get to 30 total kills
-| `radiant_team_race_to_40_kills`      |  The radiant player team will first get to 40 total kills
-| `radiant_team_race_to_50_kills`      |  The radiant player team will first get to 50 total kills
-| `radiant_team_race_to_60_kills`      |  The radiant player team will first get to 60 total kills
-| `radiant_team_race_to_70_kills`      |  The radiant player team will first get to 70 total kills
-| `radiant_team_race_to_80_kills`      |  The radiant player team will first get to 80 total kills
-| `radiant_team_race_to_90_kills`      |  The radiant player team will first get to 90 total kills
-| `radiant_team_race_to_100_kills`     |  The radiant player team will first get to 100 total kills
+| **Value**                           |**Outcomes**                                                  | **Description** |
+| ---                                 |  ---                                                         | ---             |
+| `radiant_team_win`                  |0 - dire won<br>1 - radiant won                                 | The radiant team will win current map
+| `radiant_team_higher_gpm`           |0 - dire higher gpm<br>1 - radiant higher gpm                   | The radiant team have higher combined GPM when the map ends
+| `radiant_team_higher_xpm`           |0 - dire higher xpm<br>1 - radiant higher xpm                   | The radiant team have higher combined XPM when the map ends
+| `radiant_team_higher_kills`         |0 - dire higher kills count<br>1 - radiant higher kills count | The radiant team have higher combined kills count when the map ends
+| `radiant_team_first_blood`          |0 - dire first blood<br>1 - radiant first blood                 | The radiant team will take first blood
+| `radiant_team_first_roshan`         |0 - dire first roshan<br>1 - radiant first roshan               | The radiant team will take first roshan
+| `radiant_team_destroy_first_tower`  |0 - dire destroy first tower<br>1 - radiant destroy first tower | The radiant team will destroy first tower on the map
+| `radiant_team_destroy_first_barrack`|0 - dire destroy first barrack<br>1 - radiant destroy first barrack| The radiant team will destroy first barrack on the map
+| `radiant_player_higher_gpm`         |0 - dire player higher gpm<br>1 - radiant player higher gpm      | The radiant player will have higher GPM when the map ends
+| `radiant_player_higher_xpm`         |0 - dire player higher xpm<br>1 - radiant player higher xpm      | The radiant player will have higher XPM when the map ends
+| `radiant_player_higher_kills`       |0 - dire player higher kills<br>1 - radiant player higher kills | The radiant player will have higher kills count when the map ends
+| `radiant_team_race_to_10_kills`     |0 - dire first 10 team kills<br>1 - radiant first 10 team kills  | The radiant player team will first get to 10 total kills
+| `radiant_team_race_to_20_kills`     |0 - dire first 20 team kills<br>1 - radiant first 20 team kills  | The radiant player team will first get to 20 total kills
+| `radiant_team_race_to_30_kills`     |0 - dire first 30 team kills<br>1 - radiant first 30 team kills  | The radiant player team will first get to 30 total kills
+| `radiant_team_race_to_40_kills`     |0 - dire first 40 team kills<br>1 - radiant first 40 team kills  | The radiant player team will first get to 40 total kills
+| `radiant_team_race_to_50_kills`     |0 - dire first 50 team kills<br>1 - radiant first 50 team kills  | The radiant player team will first get to 50 total kills
+| `radiant_team_race_to_60_kills`     |0 - dire first 60 team kills<br>1 - radiant first 60 team kills  | The radiant player team will first get to 60 total kills
+| `radiant_team_race_to_70_kills`     |0 - dire first 70 team kills<br>1 - radiant first 70 team kills  | The radiant player team will first get to 70 total kills
+| `radiant_team_race_to_80_kills`     |0 - dire first 80 team kills<br>1 - radiant first 80 team kills  | The radiant player team will first get to 80 total kills
+| `radiant_team_race_to_90_kills`     |0 - dire first 90 team kills<br>1 - radiant first 90 team kills  | The radiant player team will first get to 90 total kills
+| `radiant_team_race_to_100_kills`    |0 - dire first 100 team kills<br>1 - radiant first 100 team kills| The radiant player team will first get to 100 total kills
 
 <aside class="warning">
 Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboard does not necessary imply that <code>radiant_team_race_to_10_kills</code> should be already resolved.
