@@ -74,8 +74,6 @@ request(options, function (error, response, body) {
 
 ## Live games API
 
-Live games API will return all live games with relevant predictions.
-
 ```shell
 curl --request GET \
   --url 'https://app.fortune-teller.io/api/dota/live' \
@@ -223,6 +221,36 @@ request(options, function (error, response, body) {
   ]
 }
 ```
+
+Live games API will return all live games with relevant predictions.
+
+---
+
+### Match structure
+
+1. `match_id`: the identifier, see [section](#markets) below
+2. `game_time`: current in-game time in seconds
+3. `series`: describes series of matches
+    1. `series_id`: the id of the first match in the series defines the series_id
+    2. `game_number`: ordinal number inside the series
+    3. `dire_wins`: number of games dire have won when current match started
+    4. `radiant_wins`: number of games radiant have won when current match started
+4. `radiant` and `dire`: describes particiapting teams
+5. `markets`: desribes available markets
+    1. `id`: identifier of the market
+    2. `game_time`: the in-game time of prediction or result, this can be different from match game_time when market is resolved as it won't advance
+    3. `result`: describes the outcome of the market, can be null
+        1. `outcome`: describes the numeric outcome
+        2. `label`: human-readable description of outcome
+    4. `status`: market status, see [section](#market-status) below
+    5. `message`: human-readable explanation of why market is in specified state
+    6. `predictions`: market predictions
+        1. `outcome`: predicted outcome
+        2. `label`: predicted outcome label
+        3. `probability`: probability of outcome
+        4. `odds`: reccomended odds
+        5. `is_locked`: specifies whether this outcome is recomended to be locked
+        6. `lock_reason`: the reason of lock reccomendation, can be null
 
 ---
 
