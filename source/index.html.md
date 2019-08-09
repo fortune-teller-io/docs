@@ -258,27 +258,29 @@ Live games API will return all live games with relevant predictions.
 
 Market id can have following values:
 
-1. `radiant_team_win_outcome`
-2. `radiant_team_higher_gpm`
-3. `radiant_team_higher_xpm`
-4. `radiant_team_higher_kills`
-5. `radiant_team_first_blood`
-6. `radiant_team_first_roshan`
-7. `radiant_team_destroy_first_tower`
-8. `radiant_team_destroy_first_barrack`
-9. `radiant_player_higher_gpm`
-10. `radiant_player_higher_xpm`
-11. `radiant_player_higher_kills`
-12. `radiant_team_race_to_10_kills`
-13. `radiant_team_race_to_20_kills`
-14. `radiant_team_race_to_30_kills`
-15. `radiant_team_race_to_40_kills`
-16. `radiant_team_race_to_50_kills`
-17. `radiant_team_race_to_60_kills`
-18. `radiant_team_race_to_70_kills`
-19. `radiant_team_race_to_80_kills`
-20. `radiant_team_race_to_90_kills`
-21. `radiant_team_race_to_100_kills`
+| **Value**                            | **Description** |
+| ---                                  | ---             |
+| `radiant_team_win`                   |  The radiant team will win current map
+| `radiant_team_higher_gpm`            |  The radiant team have higher combined GPM when the map ends
+| `radiant_team_higher_xpm`            |  The radiant team have higher combined XPM when the map ends
+| `radiant_team_higher_kills`          |  The radiant team have higher combined kills count when the map ends
+| `radiant_team_first_blood`           |  The radiant team will take first blood
+| `radiant_team_first_roshan`          |  The radiant team will take first roshan
+| `radiant_team_destroy_first_tower`   |  The radiant team will destroy first tower on the map
+| `radiant_team_destroy_first_barrack` |  The radiant team will destroy first barrack on the map
+| `radiant_player_higher_gpm`          |  The radiant player will have higher GPM when the map ends
+| `radiant_player_higher_xpm`          |  The radiant player will have higher XPM when the map ends
+| `radiant_player_higher_kills`        |  The radiant player will have higher kills count when the map ends
+| `radiant_team_race_to_10_kills`      |  The radiant player team will first get to 10 total kills
+| `radiant_team_race_to_20_kills`      |  The radiant player team will first get to 20 total kills
+| `radiant_team_race_to_30_kills`      |  The radiant player team will first get to 30 total kills
+| `radiant_team_race_to_40_kills`      |  The radiant player team will first get to 40 total kills
+| `radiant_team_race_to_50_kills`      |  The radiant player team will first get to 50 total kills
+| `radiant_team_race_to_60_kills`      |  The radiant player team will first get to 60 total kills
+| `radiant_team_race_to_70_kills`      |  The radiant player team will first get to 70 total kills
+| `radiant_team_race_to_80_kills`      |  The radiant player team will first get to 80 total kills
+| `radiant_team_race_to_90_kills`      |  The radiant player team will first get to 90 total kills
+| `radiant_team_race_to_100_kills`     |  The radiant player team will first get to 100 total kills
 
 <aside class="warning">
 Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboard does not necessary imply that <code>radiant_team_race_to_10_kills</code> should be already resolved.
