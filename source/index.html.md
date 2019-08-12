@@ -110,6 +110,10 @@ request(options, function (error, response, body) {
     {
       "match_id": 9792,
       "game_time": 2546,
+      "league": {
+        "league_id": 817,
+        "name": "Botwars, Dota2 Season 17"
+      },
       "series": {
         "series_id": 9059,
         "game_number": 1,
@@ -228,16 +232,19 @@ Live games API will return all live games with relevant predictions.
 
 ### Match structure
 
-1. `match_id`: the identifier, see [section](#markets) below
+1. `match_id`: the identifier
 2. `game_time`: current in-game time in seconds
-3. `series`: describes series of matches
+3. `league`: describes league the match belongs to
+    1. `league_id`: the identifier
+    2. `name`: name of the league
+4. `series`: describes series of matches
     1. `series_id`: the id of the first match in the series defines the series_id
     2. `game_number`: ordinal number inside the series
     3. `dire_wins`: number of games dire have won when current match started
     4. `radiant_wins`: number of games radiant have won when current match started
-4. `radiant` and `dire`: describes particiapting teams
-5. `markets`: desribes available markets
-    1. `id`: identifier of the market
+5. `radiant` and `dire`: describes particiapting teams
+6. `markets`: desribes available markets
+    1. `id`: identifier of the market, see [section](#markets) below
     2. `game_time`: the in-game time of prediction or result, this can be different from match game_time when market is resolved as it won't advance
     3. `result`: describes the outcome of the market, can be null
         1. `outcome`: describes the numeric outcome
@@ -335,6 +342,10 @@ var socket = io("https://app.fortune-teller.io/dota/v2", {
 {
   "match_id": 9792,
   "game_time": 2546,
+  "league": {
+    "league_id": 817,
+    "name": "Botwars, Dota2 Season 17"
+  },
   "series": {
     "series_id": 9059,
     "game_number": 1,
