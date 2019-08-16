@@ -305,6 +305,7 @@ Market status can have following values:
 | `OnHold`            | The market is put on hold due to market template configuration and is recommended not to be traded
 | `WaitingForResult`  | Some data sources can not provide enough information to resolve market in real-time (due to absence of data or not enough resolution). The result will be available after replay parse
 | `Resolved`          | Market is resolved successfully
+| `NotHappened`       | None of the market outcomes occurred and market is recommended to be refund
 
 ## Real-time API
 
