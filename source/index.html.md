@@ -237,16 +237,17 @@ Live games API will return all live games with relevant predictions.
 1. `match_id`: the identifier
 2. `game_time`: current in-game time in seconds
 3. `state`: describes match state, see [section](#match-state) below
-4. `league`: describes league the match belongs to
+4. `started_at`: first time when the match was observed, usually when pick/ban stage started
+5. `league`: describes league the match belongs to
     1. `league_id`: the identifier
     2. `name`: name of the league
-5. `series`: describes series of matches
+6. `series`: describes series of matches
     1. `series_id`: the id of the first match in the series defines the series_id
     2. `game_number`: ordinal number inside the series
     3. `dire_wins`: number of games dire have won when current match started
     4. `radiant_wins`: number of games radiant have won when current match started
-6. `radiant` and `dire`: describes particiapting teams
-7. `markets`: desribes available markets
+7. `radiant` and `dire`: describes particiapting teams
+8. `markets`: desribes available markets
     1. `id`: identifier of the market, see [section](#markets) below
     2. `game_time`: the in-game time of prediction or result, this can be different from match game_time when market is resolved as it won't advance
     3. `result`: describes the outcome of the market, can be null
