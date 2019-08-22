@@ -110,6 +110,7 @@ request(options, function (error, response, body) {
     {
       "match_id": 9792,
       "game_time": 2546,
+      "state": "Ready",
       "league": {
         "league_id": 817,
         "name": "Botwars, Dota2 Season 17"
