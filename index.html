@@ -237,6 +237,9 @@
                     <a href="#live-games-api" class="toc-h2 toc-link" data-title="Live games API">Live games API</a>
                   </li>
                   <li>
+                    <a href="#logo-api" class="toc-h2 toc-link" data-title="Logo API">Logo API</a>
+                  </li>
+                  <li>
                     <a href="#real-time-api" class="toc-h2 toc-link" data-title="Real-time API">Real-time API</a>
                   </li>
               </ul>
@@ -474,6 +477,7 @@ curl --request POST <span class="se">\</span>
 <ol>
 <li><code>league_id</code>: the identifier</li>
 <li><code>name</code>: name of the league</li>
+<li><code>logo</code>: the logo identifier, see <a href="#logo-api">section</a> below</li>
 </ol></li>
 <li><code>series</code>: describes series of matches
 
@@ -693,6 +697,34 @@ Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboar
 <td>None of the market outcomes occurred and market is recommended to be refund</td>
 </tr>
 </tbody></table>
+<h2 id='logo-api'>Logo API</h2>
+<p>Logo API is not protected by authorization and can be (but not recommended) embedded into html for example.
+There is no CDN system beneath this API at the moment, so it can became a source of significant latency. 
+The caching by consumer is strongly recommended. 
+The unprotected nature of this API can be subject to change and should not be relied on.</p>
+<pre class="highlight shell tab-shell"><code>curl --request GET --url <span class="s1">'https://app.fortune-teller.io/api/logo/{logoId}'</span> --output <span class="k">${</span><span class="nv">logoId</span><span class="k">}</span>.png
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">logoId</span> <span class="o">=</span> <span class="s1">'logoId'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
+    <span class="na">url</span><span class="p">:</span> <span class="s2">`https://app.fortune-teller.io/api/logo/</span><span class="p">${</span><span class="nx">logoId</span><span class="p">}</span><span class="s2">`</span><span class="p">,</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">file</span> <span class="o">=</span> <span class="nx">fs</span><span class="p">.</span><span class="nx">createWriteStream</span><span class="p">(</span><span class="s2">`{logoId}.png`</span><span class="p">);</span>
+
+<span class="nx">request</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">pipe</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'finish'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`The file is finished downloading.`</span><span class="p">);</span>
+        <span class="nx">resolve</span><span class="p">();</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'error'</span><span class="p">,</span> <span class="p">(</span><span class="nx">error</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">);</span>
+  <span class="p">})</span>
+
+</code></pre>
+<blockquote>
+<p>To get team logo substitute {logoId} with value from logo property of team</p>
+</blockquote>
 <h2 id='real-time-api'>Real-time API</h2>
 <p>For JavaScript real-time socket.io connection is another available option to consume live matches.</p>
 <pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">io</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'socket.io-client'</span><span class="p">);</span>
