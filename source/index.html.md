@@ -241,6 +241,7 @@ Live games API will return all live games with relevant predictions.
 5. `league`: describes league the match belongs to
     1. `league_id`: the identifier
     2. `name`: name of the league
+    3. `logo`: the logo identifier, see [section](#logo-api) below
 6. `series`: describes series of matches
     1. `series_id`: the id of the first match in the series defines the series_id
     2. `game_number`: ordinal number inside the series
@@ -322,6 +323,40 @@ Market status can have following values:
 | `WaitingForResult`  | Some data sources can not provide enough information to resolve market in real-time (due to absence of data or not enough resolution). The result will be available after replay parse
 | `Resolved`          | Market is resolved successfully
 | `NotHappened`       | None of the market outcomes occurred and market is recommended to be refund
+
+## Logo API
+
+Logo API is not protected by authorization and can be (but not recommended) embedded into html for example.
+There is no CDN system beneath this API at the moment, so it can became a source of significant latency. 
+The caching by consumer is strongly recommended. 
+The unprotected nature of this API can be subject to change and should not be relied on.
+
+```shell
+curl --request GET --url 'https://app.fortune-teller.io/api/logo/{logoId}' --output ${logoId}.png
+```
+
+```javascript
+var logoId = 'logoId';
+var options = {
+    method: 'GET',
+    url: `https://app.fortune-teller.io/api/logo/${logoId}`,
+};
+
+var file = fs.createWriteStream(`{logoId}.png`);
+
+request(options)
+  .pipe(file)
+  .on('finish', () => {
+        console.log(`The file is finished downloading.`);
+        resolve();
+  })
+  .on('error', (error) => {
+        console.log(error);
+  })
+
+```
+
+> To get team logo substitute {logoId} with value from logo property of team
 
 ## Real-time API
 
