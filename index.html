@@ -465,6 +465,7 @@ curl --request POST <span class="se">\</span>
 <ol>
 <li><code>match_id</code>: the identifier</li>
 <li><code>game_time</code>: current in-game time in seconds</li>
+<li><code>state</code>: describes match state, see <a href="#match-state">section</a> below</li>
 <li><code>league</code>: describes league the match belongs to
 
 <ol>
@@ -507,6 +508,36 @@ curl --request POST <span class="se">\</span>
 </ol>
 
 <hr>
+<h3 id='match-state'>Match state</h3>
+<p>Match state can have following valued:</p>
+
+<table><thead>
+<tr>
+<th><strong>Value</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>Ready</code></td>
+<td>The match is ready and being traded</td>
+</tr>
+<tr>
+<td><code>Ended</code></td>
+<td>The match end result have been observed. This will resolve such markets as <code>radiant_team_win</code>, <code>radiant_team_higher_gpm</code>, <code>radiant_team_higher_xpm</code>, <code>radiant_team_higher_kills</code>, <code>radiant_player_higher_gpm</code>, <code>radiant_player_higher_xpm</code>, <code>radiant_player_higher_kills</code></td>
+</tr>
+<tr>
+<td><code>WaitingForReplayParse</code></td>
+<td>To address ambuguity and overcome fundamental data source we process replays. This will resolve all markets that have not been resolved during match being live. Also, markets such as <code>radiant_team_first_roshan</code> are currently only resolved from replay. The match will transition to this state when replay url will be determined and will stay in it until file is processed.</td>
+</tr>
+<tr>
+<td><code>ReplayNotAvailable</code></td>
+<td>There are rare cases when match replay was not recorded and is not available. Is such cases unresolved markets will be marked as <code>NotHappened</code>. Terminal state. The match will stay in cache for some time and then won&#39;t be available as live match anymore.</td>
+</tr>
+<tr>
+<td><code>ReplayParsed</code></td>
+<td>Terminal state. The match will stay in cache for some time and then won&#39;t be available as live match anymore.</td>
+</tr>
+</tbody></table>
 <h3 id='markets'>Markets</h3>
 <p>Market id can have following values:</p>
 
@@ -691,6 +722,7 @@ Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboar
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
   </span><span class="s2">"match_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9792</span><span class="p">,</span><span class="w">
   </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">2546</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ready"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"league"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="s2">"league_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">817</span><span class="p">,</span><span class="w">
     </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Botwars, Dota2 Season 17"</span><span class="w">
