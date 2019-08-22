@@ -234,16 +234,17 @@ Live games API will return all live games with relevant predictions.
 
 1. `match_id`: the identifier
 2. `game_time`: current in-game time in seconds
-3. `league`: describes league the match belongs to
+3. `state`: describes match state, see [section](#match-state) below
+4. `league`: describes league the match belongs to
     1. `league_id`: the identifier
     2. `name`: name of the league
-4. `series`: describes series of matches
+5. `series`: describes series of matches
     1. `series_id`: the id of the first match in the series defines the series_id
     2. `game_number`: ordinal number inside the series
     3. `dire_wins`: number of games dire have won when current match started
     4. `radiant_wins`: number of games radiant have won when current match started
-5. `radiant` and `dire`: describes particiapting teams
-6. `markets`: desribes available markets
+6. `radiant` and `dire`: describes particiapting teams
+7. `markets`: desribes available markets
     1. `id`: identifier of the market, see [section](#markets) below
     2. `game_time`: the in-game time of prediction or result, this can be different from match game_time when market is resolved as it won't advance
     3. `result`: describes the outcome of the market, can be null
@@ -260,6 +261,18 @@ Live games API will return all live games with relevant predictions.
         6. `lock_reason`: the reason of lock reccomendation, can be null
 
 ---
+
+### Match state
+
+Match state can have following valued:
+
+| **Value**           | **Description** |
+| ---                 | ---             |
+| `Ready`             | The match is ready and being traded
+| `Ended`             | The match end result have been observed. This will resolve such markets as `radiant_team_win`, `radiant_team_higher_gpm`, `radiant_team_higher_xpm`, `radiant_team_higher_kills`, `radiant_player_higher_gpm`, `radiant_player_higher_xpm`, `radiant_player_higher_kills`
+| `WaitingForReplayParse` | To address ambuguity and overcome fundamental data source we process replays. This will resolve all markets that have not been resolved during match being live. Also, markets such as `radiant_team_first_roshan` are currently only resolved from replay. The match will transition to this state when replay url will be determined and will stay in it until file is processed.
+| `ReplayNotAvailable` | There are rare cases when match replay was not recorded and is not available. Is such cases unresolved markets will be marked as `NotHappened`. Terminal state. The match will stay in cache for some time and then won't be available as live match anymore.
+| `ReplayParsed`       | Terminal state. The match will stay in cache for some time and then won't be available as live match anymore.
 
 ### Markets
 
@@ -343,6 +356,7 @@ var socket = io("https://app.fortune-teller.io/dota/v2", {
 {
   "match_id": 9792,
   "game_time": 2546,
+  "state": "Ready",
   "league": {
     "league_id": 817,
     "name": "Botwars, Dota2 Season 17"
