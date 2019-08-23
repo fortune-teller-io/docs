@@ -250,13 +250,14 @@ Live games API will return all live games with relevant predictions.
 7. `radiant` and `dire`: describes particiapting teams
 8. `markets`: desribes available markets
     1. `id`: identifier of the market, see [section](#markets) below
-    2. `game_time`: the in-game time of prediction or result, this can be different from match game_time when market is resolved as it won't advance
-    3. `result`: describes the outcome of the market, can be null
+    2. `label`: human readable market label
+    3. `game_time`: the in-game time of prediction or result, this can be different from match game_time when market is resolved as it won't advance
+    4. `result`: describes the outcome of the market, can be null
         1. `outcome`: describes the numeric outcome
         2. `label`: human-readable description of outcome
-    4. `status`: market status, see [section](#market-status) below
-    5. `message`: human-readable explanation of why market is in specified state
-    6. `predictions`: market predictions
+    5. `status`: market status, see [section](#market-status) below
+    6. `message`: human-readable explanation of why market is in specified state
+    7. `predictions`: market predictions
         1. `outcome`: predicted outcome
         2. `label`: predicted outcome label
         3. `probability`: probability of outcome
@@ -276,6 +277,7 @@ Match state can have following valued:
 | `Ended`             | The match end result have been observed. This will resolve such markets as `radiant_team_win`, `radiant_team_higher_gpm`, `radiant_team_higher_xpm`, `radiant_team_higher_kills`, `radiant_player_higher_gpm`, `radiant_player_higher_xpm`, `radiant_player_higher_kills`
 | `WaitingForReplayParse` | To address ambuguity and overcome fundamental data source we process replays. This will resolve all markets that have not been resolved during match being live. Also, markets such as `radiant_team_first_roshan` are currently only resolved from replay. The match will transition to this state when replay url will be determined and will stay in it until file is processed.
 | `ReplayNotAvailable` | There are rare cases when match replay was not recorded and is not available. Is such cases unresolved markets will be marked as `NotHappened`. Terminal state. The match will stay in cache for some time and then won't be available as live match anymore.
+| `ResultNotAvailable` | Tha match should be considered invalid. This is an observable side effect from underlying data source. Terminal state. The match will stay in cache for some time and then won't be available as live match anymore.
 | `ReplayParsed`       | Terminal state. The match will stay in cache for some time and then won't be available as live match anymore.
 
 ### Markets
