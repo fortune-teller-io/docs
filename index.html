@@ -492,6 +492,7 @@ curl --request POST <span class="se">\</span>
 
 <ol>
 <li><code>id</code>: identifier of the market, see <a href="#markets">section</a> below</li>
+<li><code>label</code>: human readable market label</li>
 <li><code>game_time</code>: the in-game time of prediction or result, this can be different from match game_time when market is resolved as it won&#39;t advance</li>
 <li><code>result</code>: describes the outcome of the market, can be null
 
@@ -539,6 +540,10 @@ curl --request POST <span class="se">\</span>
 <tr>
 <td><code>ReplayNotAvailable</code></td>
 <td>There are rare cases when match replay was not recorded and is not available. Is such cases unresolved markets will be marked as <code>NotHappened</code>. Terminal state. The match will stay in cache for some time and then won&#39;t be available as live match anymore.</td>
+</tr>
+<tr>
+<td><code>ResultNotAvailable</code></td>
+<td>Tha match should be considered invalid. This is an observable side effect from underlying data source. Terminal state. The match will stay in cache for some time and then won&#39;t be available as live match anymore.</td>
 </tr>
 <tr>
 <td><code>ReplayParsed</code></td>
