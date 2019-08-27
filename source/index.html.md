@@ -221,6 +221,14 @@ request(options, function (error, response, body) {
               "lock_reason": null
             }
           ]
+        },
+        {
+          "id": "radiant_team_first_roshan",
+          "game_time": 2546,
+          "result": null,
+          "status": "NotHappened",
+          "message": "Result did not happen",
+          "predictions": null
         }
       ]
     }
@@ -507,6 +515,14 @@ var socket = io("https://app.fortune-teller.io/dota/v2", {
           "lock_reason": null
         }
       ]
+    },
+    {
+      "id": "radiant_team_first_roshan",
+      "game_time": 2546,
+      "result": null,
+      "status": "NotHappened",
+      "message": "Result did not happen",
+      "predictions": null
     }
   ]
 }
