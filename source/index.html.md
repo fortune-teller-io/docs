@@ -105,7 +105,7 @@ request(options, function (error, response, body) {
 
 ```json
 {
-  "count": 1,
+  "count": 2,
   "items": [
     {
       "match_id": 9792,
@@ -221,10 +221,210 @@ request(options, function (error, response, body) {
               "lock_reason": null
             }
           ]
+        }
+      ]
+    },
+    {
+      "match_id": 4990466893,
+      "game_time": 938,
+      "state": "ParseCompleted",
+      "started_at": "2019-08-27T11:38:05.2506405Z",
+      "league": {
+        "league_id": 10605,
+        "name": "Epulze.com"
+      },
+      "series": {
+        "series_id": 4990384044,
+        "game_number": 2,
+        "dire_wins": 0,
+        "radiant_wins": 1
+      },
+      "radiant": {
+        "team_id": 7313524,
+        "name": "Ogorod Gaming",
+        "logo": "795368055541056205"
+      },
+      "dire": {
+        "team_id": 0,
+        "name": "Dire",
+        "logo": null
+      },
+      "markets": [
+        {
+          "id": "radiant_team_win",
+          "label": null,
+          "game_time": 938,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant win"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_higher_gpm",
+          "label": null,
+          "game_time": 938,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_higher_xpm",
+          "label": null,
+          "game_time": 938,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_higher_kills",
+          "label": null,
+          "game_time": 938,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_player_higher_gpm",
+          "label": null,
+          "game_time": 938,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_player_higher_xpm",
+          "label": null,
+          "game_time": 938,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_player_higher_kills",
+          "label": null,
+          "game_time": 938,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_race_to_10_kills",
+          "label": null,
+          "game_time": 604,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant first"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_destroy_first_barrack",
+          "label": null,
+          "game_time": 900,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_destroy_first_tower",
+          "label": null,
+          "game_time": 372,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_first_blood",
+          "label": null,
+          "game_time": 166,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
         },
         {
           "id": "radiant_team_first_roshan",
-          "game_time": 2546,
+          "label": null,
+          "game_time": 566,
+          "result": {
+            "outcome": 1,
+            "label": "Radiant"
+          },
+          "status": "Resolved",
+          "message": "Market resolved successfully",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_race_to_20_kills",
+          "label": null,
+          "game_time": 938,
+          "result": null,
+          "status": "NotHappened",
+          "message": "Result did not happen",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_race_to_30_kills",
+          "label": null,
+          "game_time": 938,
+          "result": null,
+          "status": "NotHappened",
+          "message": "Result did not happen",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_race_to_40_kills",
+          "label": null,
+          "game_time": 938,
+          "result": null,
+          "status": "NotHappened",
+          "message": "Result did not happen",
+          "predictions": null
+        },
+        {
+          "id": "radiant_team_race_to_50_kills",
+          "label": null,
+          "game_time": 938,
           "result": null,
           "status": "NotHappened",
           "message": "Result did not happen",
