@@ -698,7 +698,20 @@ curl --request POST <span class="se">\</span>
 <li><code>dire_wins</code>: number of games dire have won when current match started</li>
 <li><code>radiant_wins</code>: number of games radiant have won when current match started</li>
 </ol></li>
-<li><code>radiant</code> and <code>dire</code>: describes particiapting teams</li>
+<li><code>radiant</code> and <code>dire</code>: describes participating teams
+
+<ol>
+<li><code>team_id</code>: the identifier</li>
+<li><code>name</code>: name</li>
+<li><code>logo</code>: the logo identifier</li>
+</ol></li>
+<li><code>streams</code>: describes live streams taht were resolved for particular match
+
+<ol>
+<li><code>url</code>: the url of the steam</li>
+<li><code>title</code>: either setup or generated title of the stream</li>
+<li><code>type</code>: used to describe the source of the stream, see <a href="#stream-types">section</a> below</li>
+</ol></li>
 <li><code>markets</code>: desribes available markets
 
 <ol>
@@ -725,6 +738,10 @@ curl --request POST <span class="se">\</span>
 </ol></li>
 </ol></li>
 </ol>
+
+<aside class="warning">
+Any textual information from open sources is not censured or validated and provided as is. Team names, league names or stream titles can contain profanity and should be validate by the end user.
+</aside>
 
 <hr>
 <h3 id='match-state'>Match state</h3>
@@ -761,6 +778,28 @@ curl --request POST <span class="se">\</span>
 <td>Terminal state. The match will stay in cache for some time and then won&#39;t be available as live match anymore.</td>
 </tr>
 </tbody></table>
+<h3 id='stream-types'>Stream types</h3>
+<p>Stream type can have following values:</p>
+
+<table><thead>
+<tr>
+<th><strong>Value</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>twitch</code></td>
+<td>To match the twitch stream to match the stream title is tested to contain at least one team name stripped from any non alphanumerical symbols or if none were matched contains the name of league</td>
+</tr>
+<tr>
+<td><code>trackdota</code></td>
+<td>Trackdota link will be applied to each match. The liveness of the page on trackdota won&#39;t be validated. There are also rare cases when trackdota doesn&#39;t track some of the matches from amateur leagues.</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+The correctness of the live streams is not guaranteed. There can be both cases of missing streams and streams that were resolved incorrectly. The matching logic is subject to change, but as with any algorithm it can not be guaranteed to cover all possible cases.
+</aside>
 <h3 id='markets'>Markets</h3>
 <p>Market id can have following values:</p>
 
@@ -876,10 +915,15 @@ curl --request POST <span class="se">\</span>
 <td>0 - dire first 100 team kills<br>1 - radiant first 100 team kills</td>
 <td>The radiant player team will first get to 100 total kills</td>
 </tr>
+<tr>
+<td><code>odd_even_total_kills</code></td>
+<td>0 - total kills is even<br>1 - total kills is odd</td>
+<td>Total kills is the sum of both teams kills</td>
+</tr>
 </tbody></table>
 
 <aside class="warning">
-Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboard does not necessary imply that <code>radiant_team_race_to_10_kills</code> should be already resolved.
+Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboard does not necessary imply that <code>radiant_team_race_to_10_kills</code> should be already resolved. The same is applicable for <code>odd_even_total_kills</code> or any other kills related markets.
 </aside>
 
 <hr>
@@ -971,49 +1015,142 @@ The unprotected nature of this API can be subject to change and should not be re
 <p>Match event will have following form</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-  </span><span class="s2">"match_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9792</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">2546</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"match_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5109024876</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1675</span><span class="p">,</span><span class="w">
   </span><span class="s2">"state"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ready"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"started_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-07-23T12:49:37.8756110Z"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"started_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2019-11-11T15:23:51.5332709Z"</span><span class="p">,</span><span class="w">
   </span><span class="s2">"league"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"league_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">817</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Botwars, Dota2 Season 17"</span><span class="w">
+    </span><span class="s2">"league_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5683</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Workshop Bot Scripts"</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"series"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"series_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">9059</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"series_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">5109024876</span><span class="p">,</span><span class="w">
     </span><span class="s2">"game_number"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
     </span><span class="s2">"dire_wins"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="s2">"radiant_wins"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"radiant"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"team_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">565</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"KZ.D2"</span><span class="w">
+    </span><span class="s2">"team_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4997583</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="s2">"dire"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="s2">"team_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">578</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"SK.D2"</span><span class="w">
+    </span><span class="s2">"team_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4997618</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PubSimulator"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"logo"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
   </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"streams"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.twitch.tv/fortune_teller"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[fortune-teller.io] Workshop Bot Scripts clash"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"twitch"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.trackdota.com/matches/5109024876"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"title"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[Workshop Bot Scripts] PubSimulator vs Ranked Matchmaking AI"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trackdota"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
   </span><span class="s2">"markets"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_win"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">2546</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Winner (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1675</span><span class="p">,</span><span class="w">
       </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Open"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"No reason to put on hold found"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OnHold"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI probability is higher than 0.80"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dire win"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5541133036827675</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.7</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PubSimulator"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.13888672503679306</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">5.75</span><span class="p">,</span><span class="w">
           </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Radiant win"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.44588669631723254</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.08</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.8611132749632069</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.12</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_higher_gpm"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Team with higher GPM (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1675</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OnHold"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI probability is higher than 0.80"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PubSimulator"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.07056021025983177</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">9.47</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9294397897401683</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.04</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_higher_xpm"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Team with higher XPM (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1675</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OnHold"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI probability is higher than 0.80"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PubSimulator"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.05586911618928207</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mi">11</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.944130883810718</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.02</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_player_higher_kills"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Team has MVP by kills score (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1675</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OnHold"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI probability is higher than 0.80"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PubSimulator"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.04622031756293052</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">12.31</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9537796824370695</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.01</span><span class="p">,</span><span class="w">
           </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
         </span><span class="p">}</span><span class="w">
@@ -1021,10 +1158,11 @@ The unprotected nature of this API can be subject to change and should not be re
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_10_kills"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">735</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Race to 10 kills (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1056</span><span class="p">,</span><span class="w">
       </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Radiant first"</span><span class="w">
+        </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resolved"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Market resolved successfully"</span><span class="p">,</span><span class="w">
@@ -1032,10 +1170,11 @@ The unprotected nature of this API can be subject to change and should not be re
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_20_kills"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1066</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Race to 20 kills (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1411</span><span class="p">,</span><span class="w">
       </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Radiant first"</span><span class="w">
+        </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resolved"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Market resolved successfully"</span><span class="p">,</span><span class="w">
@@ -1043,55 +1182,93 @@ The unprotected nature of this API can be subject to change and should not be re
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_30_kills"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1539</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"WaitingForResult"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Market outcome is unclear. Waiting for replay to determine result"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_40_kills"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1920</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Race to 30 kills (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1654</span><span class="p">,</span><span class="w">
       </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dire first"</span><span class="w">
+        </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="w">
       </span><span class="p">},</span><span class="w">
       </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Resolved"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Market resolved successfully"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_50_kills"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">2546</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_40_kills"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Race to 40 kills (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1675</span><span class="p">,</span><span class="w">
       </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
       </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OnHold"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dire first probability is higher than 0.80"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI probability is higher than 0.80"</span><span class="p">,</span><span class="w">
       </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Dire first"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.9270702496626473</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.03</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PubSimulator"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0054637671493480205</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">18.03</span><span class="p">,</span><span class="w">
           </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Radiant first"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.07292975033735272</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">8.86</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.994536232850652</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.01</span><span class="p">,</span><span class="w">
           </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
           </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
         </span><span class="p">}</span><span class="w">
       </span><span class="p">]</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
-      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_first_roshan"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">2546</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"radiant_team_race_to_50_kills"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Race to 50 kills (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">1675</span><span class="p">,</span><span class="w">
       </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"NotHappened"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Result did not happen"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Open"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"No reason to put on hold found"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PubSimulator"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.23261236975293798</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">3.54</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Ranked Matchmaking AI"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.767387630247062</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.22</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"odd_even_total_kills"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Total kills will be odd or even (Map 1)"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"game_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"result"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Open"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Initial point is set"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"predictions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Odd total kills"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.87</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+          </span><span class="s2">"outcome"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"label"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Even total kills"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"probability"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"odds"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.87</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"is_locked"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"lock_reason"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">]</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
