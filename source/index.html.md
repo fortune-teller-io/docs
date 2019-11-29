@@ -540,6 +540,9 @@ Market id can have following values:
 | `radiant_team_race_to_90_kills`     |0 - dire first 90 team kills<br>1 - radiant first 90 team kills  | The radiant player team will first get to 90 total kills
 | `radiant_team_race_to_100_kills`    |0 - dire first 100 team kills<br>1 - radiant first 100 team kills| The radiant player team will first get to 100 total kills
 | `odd_even_total_kills`              |0 - total kills is even<br>1 - total kills is odd                | Total kills is the sum of both teams kills
+| `radiant_odd_even_total_kills`      |0 - total radiant kills is even<br>1 - total radiant kills is odd| Total kills is the sum of radiant team kills
+| `dire_odd_even_total_kills`         |0 - total dire kills is even<br>1 - total dire kills is odd      | Total kills is the sum of dire team kills
+| `any_team_destroy_first_ranged_barrack`|0 - first destroyed barrack will be melee<br>1 - first destroyed barrack will be ranged | Determines first destroyed barrack type by any of the team
 
 <aside class="warning">
 Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboard does not necessary imply that <code>radiant_team_race_to_10_kills</code> should be already resolved. The same is applicable for <code>odd_even_total_kills</code> or any other kills related markets.
