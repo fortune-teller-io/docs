@@ -242,7 +242,7 @@ request(options, function (error, response, body) {
       "radiant": {
         "team_id": 7313524,
         "name": "Ogorod Gaming",
-        "logo": "795368055541056205"
+        "logo": "https://app.fortune-teller.io/api/dota/logo/team/795368055541056205"
       },
       "dire": {
         "team_id": 0,
@@ -449,7 +449,6 @@ Live games API will return all live games with relevant predictions.
 5. `league`: describes league the match belongs to
     1. `league_id`: the identifier
     2. `name`: name of the league
-    3. `logo`: the logo identifier, see [section](#logo-api) below
 6. `series`: describes series of matches
     1. `series_id`: the id of the first match in the series defines the series_id
     2. `game_number`: ordinal number inside the series
@@ -458,7 +457,7 @@ Live games API will return all live games with relevant predictions.
 7. `radiant` and `dire`: describes participating teams
     1. `team_id`: the identifier
     2. `name`: name
-    3. `logo`: the logo identifier
+    3. `logo`: the logo link, see [section](#logo-api) below
 8. `streams`: describes live streams taht were resolved for particular match
     1. `url`: the url of the steam
     2. `title`: either setup or generated title of the stream
@@ -562,22 +561,22 @@ Market status can have following values:
 | `Resolved`          | Market is resolved successfully
 | `NotHappened`       | None of the market outcomes occurred and market is recommended to be refund
 
-## Logo API
+## Team Logo API
 
-Logo API is not protected by authorization and can be (but not recommended) embedded into html for example.
+Team Logo API is not protected by authorization and can be (but not recommended) embedded into html for example.
 There is no CDN system beneath this API at the moment, so it can became a source of significant latency. 
 The caching by consumer is strongly recommended. 
 The unprotected nature of this API can be subject to change and should not be relied on.
 
 ```shell
-curl --request GET --url 'https://app.fortune-teller.io/api/logo/{logoId}' --output ${logoId}.png
+curl --request GET --url 'https://app.fortune-teller.io/api/dota/logo/team/{logoId}' --output ${logoId}.png
 ```
 
 ```javascript
 var logoId = 'logoId';
 var options = {
     method: 'GET',
-    url: `https://app.fortune-teller.io/api/logo/${logoId}`,
+    url: `https://app.fortune-teller.io/api/dota/logo/team/${logoId}`,
 };
 
 var file = fs.createWriteStream(`{logoId}.png`);
@@ -593,8 +592,6 @@ request(options)
   })
 
 ```
-
-> To get team logo substitute {logoId} with value from logo property of team
 
 ## Real-time API
 
@@ -952,12 +949,12 @@ request(options, function (error, response, body) {
   "radiant": {
     "team_id": 2586976,
     "name": "OG",
-    "logo": "862855679982708969"
+    "logo": "https://app.fortune-teller.io/api/dota/logo/team/862855679982708969"
   },
   "dire": {
     "team_id": 2163,
     "name": "Team Liquid",
-    "logo": "785230100972622130"
+    "logo": "https://app.fortune-teller.io/api/dota/logo/team/785230100972622130"
   },
   "markets": [
     {
