@@ -1,4 +1,4 @@
-## Live games API
+## [Dota] Live games API
 
 ```shell
 curl --request GET \
@@ -370,7 +370,7 @@ Live games API will return all live games with relevant predictions.
 
 1. `match_id`: the identifier
 2. `game_time`: current in-game time in seconds
-3. `state`: describes match state, see [section](#match-state) below
+3. `state`: describes match state, see [section](#dota-match-state) below
 4. `started_at`: first time when the match was observed, usually when pick/ban stage started
 5. `league`: describes league the match belongs to
     1. `league_id`: the identifier
@@ -383,20 +383,20 @@ Live games API will return all live games with relevant predictions.
 7. `radiant` and `dire`: describes participating teams
     1. `team_id`: the identifier
     2. `name`: name
-    3. `logo`: the logo link, see [section](#logo-api) below
-    4. (Optional) `scoreboard`: detailed in-game state, see [section](#Scoreboards) below
+    3. `logo`: the logo link, see [section](#dota-logo-api) below
+    4. (Optional) `scoreboard`: detailed in-game state, see [section](#dota-scoreboards) below
 8. `streams`: describes live streams taht were resolved for particular match
     1. `url`: the url of the steam
     2. `title`: either setup or generated title of the stream
-    3. `type`: used to describe the source of the stream, see [section](#stream-types) below
+    3. `type`: used to describe the source of the stream, see [section](#dota-stream-types) below
 9. `markets`: desribes available markets
-    1. `id`: identifier of the market, see [section](#markets) below
+    1. `id`: identifier of the market, see [section](#dota-markets) below
     2. `label`: human readable market label
     3. `game_time`: the in-game time of prediction or result, this can be different from match game_time when market is resolved as it won't advance
     4. `result`: describes the outcome of the market, can be null
         1. `outcome`: describes the numeric outcome
         2. `label`: human-readable description of outcome
-    5. `status`: market status, see [section](#market-status) below
+    5. `status`: market status, see [section](#dota-market-status) below
     6. `message`: human-readable explanation of why market is in specified state
     7. `predictions`: market predictions
         1. `outcome`: predicted outcome
@@ -412,7 +412,7 @@ Any textual information from open sources is not censured or validated and provi
 
 ---
 
-### Match state
+### [Dota] Match state
 
 Match state can have following valued:
 
@@ -425,7 +425,7 @@ Match state can have following valued:
 | `ResultNotAvailable` | Tha match should be considered invalid. This is an observable side effect from underlying data source. Terminal state. The match will stay in cache for some time and then won't be available as live match anymore.
 | `ReplayParsed`       | Terminal state. The match will stay in cache for some time and then won't be available as live match anymore.
 
-### Stream types
+### [Dota] Stream types
 
 Stream type can have following values:
 
@@ -438,7 +438,7 @@ Stream type can have following values:
 The correctness of the live streams is not guaranteed. There can be both cases of missing streams and streams that were resolved incorrectly. The matching logic is subject to change, but as with any algorithm it can not be guaranteed to cover all possible cases.
 </aside>
 
-### Markets
+### [Dota] Markets
 
 Market id can have following values:
 
@@ -476,7 +476,7 @@ Dota in-game UI shows number of deaths as a score, so seeing 10 on the scoreboar
 
 ---
 
-### Market status
+### [Dota] Market status
 
 Market status can have following values:
 

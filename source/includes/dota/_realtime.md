@@ -1,4 +1,4 @@
-## Real-time API
+## [Dota] Real-time API
 
 For JavaScript real-time socket.io connection is another available option to consume live matches.
 

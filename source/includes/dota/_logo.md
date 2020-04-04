@@ -1,4 +1,4 @@
-## Team Logo API
+## [Dota] Team Logo API
 
 Team Logo API is not protected by authorization and can be (but not recommended) embedded into html for example.
 There is no CDN system beneath this API at the moment, so it can became a source of significant latency. 

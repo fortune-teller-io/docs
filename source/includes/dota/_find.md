@@ -1,4 +1,4 @@
-## Find match API
+## [Dota] Find match API
 
 It is possible to access match by its identifier. The API works both for live and ended matches.
 

@@ -1,4 +1,4 @@
-## Scoreboards
+## [Dota] Scoreboards
 
 It is possible to provide latest detailed scoreboards for its visualisation or marketing activities.
 
@@ -31,7 +31,7 @@ Please contact vendor for providing such capabilities.
         3. `games_played_with_hero`: Total amount of games played with this hero
         4. `games_won_with_hero`: Total amount of games won with this hero
         5. `hero`: Selected hero in current map
-            1. `hero_id`: Hero id. Should be used for assets resources collection, see [section](#assets-api) below
+            1. `hero_id`: Hero id. Should be used for assets resources collection, see [section](#dota-assets-api) below
             2. `name`: Hero name
             3. `primary_attribute`: Hero primary attribute
             4. `attack_type`: Hero attack type

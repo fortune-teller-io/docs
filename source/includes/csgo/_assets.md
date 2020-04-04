@@ -1,25 +1,26 @@
-## [Dota] Assets API
+## [CSGO] Assets API
 
 Assets API is dota static resources API and can be (but not recommended) embedded into html for example.
 There is no CDN system beneath this API at the moment, so it can became a source of significant latency. 
 The caching by consumer is strongly recommended. 
 The unprotected nature of this API can be subject to change and should not be relied on.
 
-### minimap/map
+### ​{side}​/icon
 
-Retrieve Dota 2 minimap image. Map dimensions are 8192x8192 which should be used in map object rendering
+Retrieve CSGO sides icons. Supported sides: `ct`, `terrorists`
 
 ```shell
-curl --request GET --url 'https://app.fortune-teller.io/api/dota/minimap/map' --output map.jpg
+curl --request GET --url 'https://app.fortune-teller.io/api​/csgo​/{side}​/icon' --output ${side}_icon.png
 ```
 
 ```javascript
+var side = 'ct';
 var options = {
     method: 'GET',
-    url: `https://app.fortune-teller.io/api/dota/minimap/map`,
+    url: `https://app.fortune-teller.io/api​/csgo​/{side}​/icon`,
 };
 
-var file = fs.createWriteStream(`map.jpg`);
+var file = fs.createWriteStream(${side}_icon.png);
 
 request(options)
   .pipe(file)
@@ -33,34 +34,22 @@ request(options)
 ```
 
 
-### minimap/{side}/{structure}
+### item/{name}
 
-Retrieve Dota 2 structures images for minimap.
-
-#### Supported sides:
-1. radiant
-2. dire
-
-#### Supported structures:
-1. ancient
-2. barrack
-3. barrackangle
-3. tower
-3. towerangle
+Retrieve CSGO items images
 
 ```shell
-curl --request GET --url 'https://app.fortune-teller.io/api/dota/minimap/{side}/{structure}' --output ${side}_${structure}.png
+curl --request GET --url 'https://app.fortune-teller.io/api/csgo/item/{name}' --output ${name}.png
 ```
 
 ```javascript
-var side = 'side';
-var structure = 'structure';
+var item = 'name';
 var options = {
     method: 'GET',
-    url: `https://app.fortune-teller.io/api/dota/minimap/${side}/${structure}`,
+    url: `https://app.fortune-teller.io/api/csgo/item/{item}`,
 };
 
-var file = fs.createWriteStream(`${side}_${structure}.png`);
+var file = fs.createWriteStream(`${item}.png`);
 
 request(options)
   .pipe(file)
@@ -73,22 +62,22 @@ request(options)
   })
 ```
 
-### hero/{id}/mini
+### map/{name}
 
 Heroes mini icons for rendering on map
 
 ```shell
-curl --request GET --url 'https://app.fortune-teller.io/api/dota/hero/{id}/mini' --output ${id}.png
+curl --request GET --url 'https://app.fortune-teller.io/api/csgo/map/{name}' --output ${name}.png
 ```
 
 ```javascript
-var id = 'id';
+var name = 'name';
 var options = {
     method: 'GET',
-    url: `https://app.fortune-teller.io/api/dota/hero/${id}/mini`,
+    url: `https://app.fortune-teller.io/api/csgo/map/{name}`,
 };
 
-var file = fs.createWriteStream(`{id}.png`);
+var file = fs.createWriteStream(`{name}.png`);
 
 request(options)
   .pipe(file)
@@ -101,22 +90,32 @@ request(options)
   })
 ```
 
-### hero/{id}/portrait
+### win/{side}/{type}
 
-Heroes portraits
+Win type icons.
+
+Supported sides: 
+1. `ct`
+2. `terrorists`
+
+Supported win types:
+1. `time`
+2. `kills`
+3. `bomb`
 
 ```shell
-curl --request GET --url 'https://app.fortune-teller.io/api/dota/hero/{id}/portrait' --output ${id}.png
+curl --request GET --url 'https://app.fortune-teller.io/api/csgo/win/{side}/{type}' --output ${side}_${type}.svg
 ```
 
 ```javascript
-var id = 'id';
+var side = 'ct';
+var type = 'time';
 var options = {
     method: 'GET',
-    url: `https://app.fortune-teller.io/api/dota/hero/${id}/portrait`,
+    url: `https://app.fortune-teller.io/api/csgo/win/{side}/{type}`,
 };
 
-var file = fs.createWriteStream(`{id}.png`);
+var file = fs.createWriteStream(`${side}_${type}.svg`);
 
 request(options)
   .pipe(file)

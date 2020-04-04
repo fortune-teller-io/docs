@@ -22,6 +22,8 @@ includes:
   - csgo/overview
   - csgo/live
   - csgo/find
+  - csgo/scoreboard
+  - csgo/assets
   - errors
 
 search: true
