@@ -56,7 +56,7 @@ bundle exec middleman server
 
 # OR run this to run with docker
 sudo docker build -t docs .
-sudo docker run -p 4567:4567 --name docs docs
+docker run -v ${PWD}:/app -p 4567:4567 --name docs docs
 ```
 
 You can now see the docs at http://localhost:4567. Whoa! That was fast!

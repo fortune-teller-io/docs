@@ -4,8 +4,8 @@ RUN apt-get update && apt install -yq pkg-config build-essential nodejs git libx
 
 WORKDIR /app
 
-COPY ./ ./
+COPY ./Gemfile ./Gemfile.lock ./
 
 RUN bundle install
 
-ENTRYPOINT [ "bundle", "exec", "middleman" ]
+ENTRYPOINT [ "bundle", "exec", "middleman", "server", "--watcher-force-polling", "--watcher-latency=1"]
