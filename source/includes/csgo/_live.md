@@ -275,12 +275,11 @@ request(options, function (error, response, body) {
 }
 ```
 
-
 ### Match structure
 
 1. `match_id`: the identifier
 3. `state`: describes match state, see [section](#csgo-match-state) below
-4. `started_at`: first time when the match was observed, usually when pick/ban stage started
+4. `started_at`: first time when the match was observed, usually when warmup stage started
 5. `league`: describes league the match belongs to
     1. `league_id`: the identifier
     2. `name`: name of the league
@@ -323,6 +322,18 @@ Any textual information from open sources is not censured or validated and provi
 </aside>
 
 ---
+
+### [CSGO] Stream types
+
+Stream type can have following values:
+
+| **Value**   | **Description** |
+| ---         | ---             |
+| `twitch`    | To match the twitch stream to match the stream title is tested to contain at least one team name stripped from any non alphanumerical symbols or if none were matched contains the name of league
+
+<aside class="warning">
+The correctness of the live streams is not guaranteed. There can be both cases of missing streams and streams that were resolved incorrectly. The matching logic is subject to change, but as with any algorithm it can not be guaranteed to cover all possible cases.
+</aside>
 
 ### [CSGO] Match state
 
