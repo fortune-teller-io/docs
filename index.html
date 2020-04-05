@@ -3098,7 +3098,7 @@ The unprotected nature of this API can be subject to change and should not be re
 <ol>
 <li><code>match_id</code>: the identifier</li>
 <li><code>state</code>: describes match state, see <a href="#csgo-match-state">section</a> below</li>
-<li><code>started_at</code>: first time when the match was observed, usually when pick/ban stage started</li>
+<li><code>started_at</code>: first time when the match was observed, usually when warmup stage started</li>
 <li><code>league</code>: describes league the match belongs to
 
 <ol>
@@ -3163,6 +3163,24 @@ Any textual information from open sources is not censured or validated and provi
 </aside>
 
 <hr>
+<h3 id='csgo-stream-types'>[CSGO] Stream types</h3>
+<p>Stream type can have following values:</p>
+
+<table><thead>
+<tr>
+<th><strong>Value</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>twitch</code></td>
+<td>To match the twitch stream to match the stream title is tested to contain at least one team name stripped from any non alphanumerical symbols or if none were matched contains the name of league</td>
+</tr>
+</tbody></table>
+
+<aside class="warning">
+The correctness of the live streams is not guaranteed. There can be both cases of missing streams and streams that were resolved incorrectly. The matching logic is subject to change, but as with any algorithm it can not be guaranteed to cover all possible cases.
+</aside>
 <h3 id='csgo-match-state'>[CSGO] Match state</h3>
 <p>Match state can have following valued:</p>
 
