@@ -7,14 +7,14 @@ The unprotected nature of this API can be subject to change and should not be re
 
 ### ​{side}​/icon
 
-Retrieve CSGO sides icons. Supported sides: `ct`, `terrorists`
+Retrieve CSGO sides icons. Supported sides: `CounterTerrorists`, `Terrorists`
 
 ```shell
 curl --request GET --url 'https://app.fortune-teller.io/api​/csgo​/{side}​/icon' --output ${side}_icon.png
 ```
 
 ```javascript
-var side = 'ct';
+var side = 'CounterTerrorists';
 var options = {
     method: 'GET',
     url: `https://app.fortune-teller.io/api​/csgo​/{side}​/icon`,
@@ -95,21 +95,26 @@ request(options)
 Win type icons.
 
 Supported sides: 
-1. `ct`
-2. `terrorists`
+1. `CounterTerrorists`
+2. `Terrorists`
 
-Supported win types:
-1. `time`
-2. `kills`
-3. `bomb`
+Supported win types for `CounterTerrorists`:
+1. `Timeout`
+2. `Annihilation`
+3. `Defused`
+
+Supported win types for `Terrorists`:
+1. `Annihilation`
+2. `Bombed`
+
 
 ```shell
 curl --request GET --url 'https://app.fortune-teller.io/api/csgo/win/{side}/{type}' --output ${side}_${type}.svg
 ```
 
 ```javascript
-var side = 'ct';
-var type = 'time';
+var side = 'CounterTerrorists';
+var type = 'Timeout';
 var options = {
     method: 'GET',
     url: `https://app.fortune-teller.io/api/csgo/win/{side}/{type}`,

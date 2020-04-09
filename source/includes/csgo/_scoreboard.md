@@ -25,8 +25,9 @@ Please contact vendor for providing such capabilities.
 3. `maps`: Info related to specific map
     1. `map_id`: Unique map id
     2. `map_name`: Map name, see [section](#csgo-assets-api) below
-    2. `map_score`: Current team map score (rounds won)
-    3. `players`: Map players info
+    3. `map_score`: Current team map score (rounds won)
+    4. `round_side`: Current team latest round side on map
+    5. `players`: Map players info
         1. `account_id`: Unique player account id
         2. `name`: Player's name
         3. `nick`: Player's nickname
@@ -42,16 +43,16 @@ Please contact vendor for providing such capabilities.
         13. `total_kills`: How many kills current player performed on current map
         14. `total_deaths`: How many deaths current player had on current map
         15. `headshot_percentage`: Headshot percentage player performed on current map
-    4. `statistics`: Map related team statistics
+    6. `statistics`: Map related team statistics
         1. `maps_played`: Maps played by team
         2. `wins`: Team wins count
         3. `draws`: Team draws count
         4. `loses`: Team loses count
         5. `total_kills`: Total kills performed by team
         6. `total_deaths`: Total team deaths
-    5. `round_result`: Lates round result
+    7. `round_result`: Lates round result
         1. `won`: If team wom latest round
-        2. `victory_type`: [Optional] How team won
+        2. `victory_type`: [Optional] How team won, see [section](#csgo-assets-api) below
 
 
 ```shell
