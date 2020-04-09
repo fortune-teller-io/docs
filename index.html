@@ -4860,6 +4860,7 @@ Please contact vendor for providing such capabilities.
 <li><code>map_id</code>: Unique map id</li>
 <li><code>map_name</code>: Map name, see <a href="#csgo-assets-api">section</a> below</li>
 <li><code>map_score</code>: Current team map score (rounds won)</li>
+<li><code>round_side</code>: Current team latest round side on map</li>
 <li><code>players</code>: Map players info
 
 <ol>
@@ -4893,7 +4894,7 @@ Please contact vendor for providing such capabilities.
 
 <ol>
 <li><code>won</code>: If team wom latest round</li>
-<li><code>victory_type</code>: [Optional] How team won</li>
+<li><code>victory_type</code>: [Optional] How team won, see <a href="#csgo-assets-api">section</a> below</li>
 </ol></li>
 </ol></li>
 </ol>
@@ -5700,9 +5701,9 @@ There is no CDN system beneath this API at the moment, so it can became a source
 The caching by consumer is strongly recommended. 
 The unprotected nature of this API can be subject to change and should not be relied on.</p>
 <h3 id='side-icon'>​{side}​/icon</h3>
-<p>Retrieve CSGO sides icons. Supported sides: <code>ct</code>, <code>terrorists</code></p>
+<p>Retrieve CSGO sides icons. Supported sides: <code>CounterTerrorists</code>, <code>Terrorists</code></p>
 <pre class="highlight shell tab-shell"><code>curl --request GET --url <span class="s1">'https://app.fortune-teller.io/api​/csgo​/{side}​/icon'</span> --output <span class="k">${</span><span class="nv">side</span><span class="k">}</span>_icon.png
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">side</span> <span class="o">=</span> <span class="s1">'ct'</span><span class="p">;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">side</span> <span class="o">=</span> <span class="s1">'CounterTerrorists'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
     <span class="na">url</span><span class="p">:</span> <span class="s2">`https://app.fortune-teller.io/api​/csgo​/{side}​/icon`</span><span class="p">,</span>
@@ -5763,16 +5764,20 @@ The unprotected nature of this API can be subject to change and should not be re
 <p>Win type icons.</p>
 
 <p>Supported sides: 
-1. <code>ct</code>
-2. <code>terrorists</code></p>
+1. <code>CounterTerrorists</code>
+2. <code>Terrorists</code></p>
 
-<p>Supported win types:
-1. <code>time</code>
-2. <code>kills</code>
-3. <code>bomb</code></p>
+<p>Supported win types for <code>CounterTerrorists</code>:
+1. <code>Timeout</code>
+2. <code>Annihilation</code>
+3. <code>Defused</code></p>
+
+<p>Supported win types for <code>Terrorists</code>:
+1. <code>Annihilation</code>
+2. <code>Bombed</code></p>
 <pre class="highlight shell tab-shell"><code>curl --request GET --url <span class="s1">'https://app.fortune-teller.io/api/csgo/win/{side}/{type}'</span> --output <span class="k">${</span><span class="nv">side</span><span class="k">}</span>_<span class="k">${</span><span class="nv">type</span><span class="k">}</span>.svg
-</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">side</span> <span class="o">=</span> <span class="s1">'ct'</span><span class="p">;</span>
-<span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="s1">'time'</span><span class="p">;</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">side</span> <span class="o">=</span> <span class="s1">'CounterTerrorists'</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">type</span> <span class="o">=</span> <span class="s1">'Timeout'</span><span class="p">;</span>
 <span class="kd">var</span> <span class="nx">options</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">method</span><span class="p">:</span> <span class="s1">'GET'</span><span class="p">,</span>
     <span class="na">url</span><span class="p">:</span> <span class="s2">`https://app.fortune-teller.io/api/csgo/win/{side}/{type}`</span><span class="p">,</span>
